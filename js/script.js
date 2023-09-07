@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email');
         const password = document.getElementById('password');
         const confirmPassword = document.getElementById('confirm-password');
+        const loader = document.querySelector('.loader');
+        console.log(loader);
 
         // Check if any required field is empty
         if (firstName.value === '') {
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function showLoader() {
-            loader.style.display = 'block';
+             loader.style.display = 'block';
             signupButton.style.display = 'none'; // Hide the button while showing the loader
             loaderVisible = true; // Set loader visibility to true
         }
@@ -92,21 +94,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const responseData = await response.json();
+            console.log(responseData)
 
             if (response.status === 200) {
+                hideLoader()
                 alert('Account registered successfully:', responseData.message);
                 // Redirect to the landing page upon successful signup
-                window.location.href = '/src/landingpage.html'; 
+                window.location.href = '/index.html'; 
             } else if (response.status === 409) {
+                hideLoader()
                 alert('Account already exists:', responseData.message);
             } else {
+                hideLoader()
                 alert('An error occurred: Please try again', responseData.message);
             }
         } catch (error) {
             alert('An error occurred: Please try again', error);
         } finally {
             setTimeout(function() {
-                hideLoader(); // Hide the loader after the alert appears
+             hideLoader(); // Hide the loader after the alert appears
             }, 1000); // Wait for 1 second before hiding the loader
         }
     });
