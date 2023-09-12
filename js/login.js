@@ -2,6 +2,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginButton = document.querySelector(".login-button");
   const email = document.getElementById("email");
   const password = document.getElementById("password");
+  const loader = document.getElementById('loader')
+  console.log(loader)
+
+  function showLoader() {
+    loader.style.display = "block";
+    loginButton.style.display = "none";
+  }
+  function hideLoader() {
+    loader.style.display = "none";
+    loginButton.style.display = "block";
+  }
 
   loginButton.addEventListener("click", async function (event) {
     event.preventDefault();
@@ -25,14 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    //  -data-raw '{
-    //     "email": "ezehlivinus@gmail.com",
-    //     "password": "012345"
-    // }'
-
-    // Rest of your code for form submission
+    
+    showLoader()
     try {
-      console.log("inside try");
       const response = await fetch(
         "https://globe-blog.onrender.com/api/v1/users/login",
         {
@@ -48,20 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       const responseData = await response.json();
-      console.log("responseData: ", responseData);
-
-      if (response.status === 200) {
-        alert("Account registered successfully:", responseData.message);
+      hideLoader()
+      if (response.status === 200 || response.status === 201) {
+        alert("Login Successful:", responseData.message);
         // Redirect to the landing page upon successful signup
         window.location.href = "/src/landingpage.html";
-      } else if (response.status === 409) {
-        alert("Account already exists:", responseData.message);
-      } else {
-        alert("An error occurred: Please try again", responseData.message);
+      } else if(response.status === 400) {
+        alert("Email or Password Incorrect");
       }
     } catch (error) {
-      console.log("error: ", error);
-      alert("An error occurred: Please try again", error);
+      alert("An error occurred: Please try againsss", error);
     } finally {
     }
   });

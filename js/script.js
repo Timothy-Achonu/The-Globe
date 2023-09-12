@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.getElementById('password');
         const confirmPassword = document.getElementById('confirm-password');
         const loader = document.querySelector('.loader');
-        console.log(loader);
 
         // Check if any required field is empty
         if (firstName.value === '') {
@@ -92,15 +91,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     password: password.value
                 })
             });
-
+ 
             const responseData = await response.json();
-            console.log(responseData)
+            console.log('responseData: ',responseData)
+            console.log('status code: ', response.status)
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 hideLoader()
                 alert('Account registered successfully:', responseData.message);
                 // Redirect to the landing page upon successful signup
-                window.location.href = '/index.html'; 
+                window.location.href = '/src/landingpage.html'; 
             } else if (response.status === 409) {
                 hideLoader()
                 alert('Account already exists:', responseData.message);

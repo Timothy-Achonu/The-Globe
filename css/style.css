@@ -694,6 +694,19 @@ input[type=submit] {
 }
 
 /* ... (your CSS code) ... */
+#loader {
+  /* display: none; */
+  position: relative;
+  align-self: center;
+  justify-content: center;
+  border: 6px solid #f3f3f3; /* Light gray border */
+  border-top: 6px solid #0056b3; /* Blue border on top */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite; /* Animation to rotate the loader */
+  margin: 20px auto;
+}
 .loader {
   /* display: none; */
   position: relative;
@@ -712,3 +725,9 @@ input[type=submit] {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#loader.login {
+  align-self: flex-start;
+  margin: 20px 0;
+}
+
